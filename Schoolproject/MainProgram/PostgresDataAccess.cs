@@ -7,54 +7,55 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Schoolproject.MainProgram
 {
     public class PostgresDataAccess
     {
-        public static List<Kha_student> ListaStudenter()
+        public static List<Student> ListaStudenter()
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Student List.\n Those student are admitted in this School.");
 
-                var output = connectionWithServer.Query<Kha_student>($" SELECT * FROM kha_student", new DynamicParameters());
+                var output = connectionWithServer.Query<Student>($" SELECT * FROM kha_student", new DynamicParameters());
                 return output.ToList();
 
-                foreach (var Kha_student in ListaStudenter())
+                List<Student> list1 = ListaStudenter();
+                for (int i = 0; i < list1.Count; i++)
                 {
-                    //Console.WriteLine("Student's Id: " + Kha_student.id);
-                    //Console.WriteLine("Student's FirstName: " + Kha_student.first_name);
-                    //Console.WriteLine("Student's LastName: " + Kha_student.last_name);
-                    //Console.WriteLine("Student's Email: " + Kha_student.email);
-                    //Console.WriteLine("Student's Age: " + Kha_student.age);
-                    //Console.WriteLine("Student's Password: " + Kha_student.password);
-
-                    Console.WriteLine("ID : {0}  |  First Name: {1}  |  Last Name: {2}  |      Email: {3}       |     Age: {4}     |     PassWord: {5}  ", Kha_student.id, Kha_student.first_name, Kha_student.last_name, Kha_student.email, Kha_student.age, Kha_student.password);
+                    Student list = list1[i];
+                    Console.WriteLine("Student's Id: " + list.id);
+                    Console.WriteLine("Student's FirstName: " + list.first_name);
+                    Console.WriteLine("Student's LastName: " + list.last_name);
+                    Console.WriteLine("Student's Email: " + list.email);
+                    Console.WriteLine("Student's Age: " + list.age);
+                    Console.WriteLine("Student's Password: " + list.password);
+                    break;
+                    //Console.WriteLine("ID : {0}  |  First Name: {1}  |  Last Name: {2}  |      Email: {3}       |     Age: {4}     |     PassWord: {5}  ", list.id, list.first_name, list.last_name, list.email, list.age, list.password);
                 }
-
-
             }
         }
 
-        public static List<Kha_course> ListaKurser()
+        public static List<Course> ListaKurser()
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
-                Console.WriteLine("WelCome to Khan School's Student List.");
+                Console.WriteLine("WelCome to Khan School's Course List.");
 
-                var output = connectionWithServer.Query<Kha_course>($" SELECT * FROM kha_student", new DynamicParameters());
+                var output = connectionWithServer.Query<Course>($"SELECT * FROM kha_course", new DynamicParameters());
                 return output.ToList();
 
-                foreach (var Kha_course in ListaKurser())
+                foreach (var item in ListaKurser())
                 {
-                    Console.WriteLine("Student's Id: " + Kha_course.id);
-                    Console.WriteLine("Student's FirstName: " + Kha_course.name);
-                    Console.WriteLine("Student's Points: " + Kha_course.points);
-                    Console.WriteLine("Student's Start Date: " + Kha_course.start_date);
-                    Console.WriteLine("Student's End Date: " + Kha_course.end_date);
+                    Console.WriteLine("Student's Id: " + item.id);
+                    Console.WriteLine("Student's FirstName: " + item.name);
+                    Console.WriteLine("Student's Points: " + item.points);
+                    Console.WriteLine("Student's Start Date: " + item.start_date);
+                    Console.WriteLine("Student's End Date: " + item.end_date);
                 }
-                
+
             }
         }
         public static void SkapaStudent()
@@ -119,7 +120,8 @@ namespace Schoolproject.MainProgram
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("Do you want change your Password.");
-
+                Console.WriteLine("Please put the serial number want to change password.");
+                int id = int.Parse(Console.ReadLine());
 
             }
         }
@@ -129,6 +131,9 @@ namespace Schoolproject.MainProgram
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Student List.");
+                Console.WriteLine("Which course would you like to change? Please put the serial Number");
+                int id = int.Parse(Console.ReadLine());
+
 
 
             }
@@ -139,6 +144,8 @@ namespace Schoolproject.MainProgram
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Student List.");
+                Console.WriteLine("Which course do you like to detele? Please put your serial Number.");
+                int id = int.Parse(Console.ReadLine());
 
 
             }

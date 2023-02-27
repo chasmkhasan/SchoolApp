@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Schoolproject.Model
 {
-    public class Kha_course
+    public class Course
     {
         public int id { get; set; }
         public string name { get; set; }
