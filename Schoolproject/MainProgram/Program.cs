@@ -6,14 +6,14 @@
         {
             Console.WriteLine("Välkommen till databasen! Vänligen välj ett av nedanstående alternativ:");
             mainMenu:
-            Console.WriteLine("1. Lista studenter");
-            Console.WriteLine("2. Lista kurser");
-            Console.WriteLine("3. Skapa student");
-            Console.WriteLine("4. Skapa kurs");
-            Console.WriteLine("5. Byt lösenord");
-            Console.WriteLine("6. Redigera kurs");
-            Console.WriteLine("7. Radera kurs");
-            Console.WriteLine("A. Avsluta");
+            Console.WriteLine("1. Print Student List");
+            Console.WriteLine("2. Print Course List");
+            Console.WriteLine("3. Create Student File");
+            Console.WriteLine("4. Create Course");
+            Console.WriteLine("5. Change Password");
+            Console.WriteLine("6. Edit Course");
+            Console.WriteLine("7. DeleteCourse");
+            Console.WriteLine("A. Logout");
 
 
             string menuOption = Console.ReadLine();
@@ -21,40 +21,40 @@
             switch (menuOption)
             {
                 case "1":
-                    PostgresDataAccess.ListaStudenter();
+                    PostgresDataAccess.PrintStudent();
 
 
 
                     goto mainMenu;
                 case "2":
-                    PostgresDataAccess.ListaKurser();
+                    PostgresDataAccess.PrintCourseList();
 
 
                     goto mainMenu;
                 case "3":
 
-                    PostgresDataAccess.SkapaStudent();
+                    PostgresDataAccess.CreateStudentFile();
 
 
                     goto mainMenu;
                 case "4":
-                    PostgresDataAccess.Skapakurs();
+                    PostgresDataAccess.CreateCourse();
 
 
 
                     goto mainMenu;
                 case "5":
-                    PostgresDataAccess.BytLösenord();
+                    PostgresDataAccess.ChangePassword();
 
 
                     goto mainMenu;
                 case "6":
-                    PostgresDataAccess.RedigeraKurs();
+                    PostgresDataAccess.EditCourse();
 
 
                     goto mainMenu;
                 case "7":
-                    PostgresDataAccess.RaderaKurs();
+                    PostgresDataAccess.DeleteCourse();
 
 
                     goto mainMenu;
