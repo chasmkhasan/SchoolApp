@@ -14,7 +14,7 @@ namespace Schoolproject.MainProgram
 {
     public class PostgresDataAccess
     {
-        public static List<Student> ReadStudentFromDataBase() // done
+        public static List<Student> ReadStudentFromDataBase()
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -26,7 +26,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void PrintStudent() // done
+        public static void PrintStudent()
         {
             
             foreach (var list in ReadStudentFromDataBase())
@@ -42,7 +42,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static List<Course> ReadCourseList() // problem
+        public static List<Course> ReadCourseList() 
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -53,7 +53,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void PrintCourseList() // Problem
+        public static void PrintCourseList() 
         {
 
             foreach (var item in ReadCourseList())
@@ -62,32 +62,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        //public static List<Course> ReadCourseList(Course course) // problem
-        //{
-        //    using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
-        //    {
-        //        Console.WriteLine("WelCome to Khan School's Course List.");
-
-        //        var listOfCourses = connectionWithServer.Query<Course>($" SELECT * FROM kha_course", new DynamicParameters());
-        //        return listOfCourses.ToList();
-
-        //        foreach (var item in course.id)
-        //        {
-        //            //Console.WriteLine("Student's Id: " + item.id);
-        //            //Console.WriteLine("Student's FirstName: " + item.name);
-        //            //Console.WriteLine("Student's Points: " + item.points);
-        //            //Console.WriteLine("Student's Start Date: " + item.start_date);
-        //            //Console.WriteLine("Student's End Date: " + item.end_date);
-
-        //            Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
-        //        }
-        //    }
-        //}
-
-
-
-
-        public static void CreateStudentFile() // done
+        public static void CreateStudentFile() 
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -115,7 +90,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void CreateCourse() // done
+        public static void CreateCourse()
         {
             //using (IDbConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
@@ -146,7 +121,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void ChangePassword() // done
+        public static void ChangePassword()
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
