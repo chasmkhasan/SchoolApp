@@ -42,19 +42,23 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void ReadCourseList() // problem
+        public static List<Course> ReadCourseList() // problem
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Course List.");
 
                 var listOfCourses = connectionWithServer.Query<Course>($" SELECT * FROM kha_course", new DynamicParameters());
+                return listOfCourses.ToList();
+            }
+        }
 
-                foreach (var item in listOfCourses)
-                {
-                    Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
-                }
-                Console.ReadKey();
+        public static void PrintCourseList() // Problem
+        {
+
+            foreach (var item in ReadCourseList())
+            {
+                Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
             }
         }
 
@@ -80,16 +84,7 @@ namespace Schoolproject.MainProgram
         //    }
         //}
 
-        //public static void PrintCourseList() 
-        //{
 
-        //    foreach (var item in ReadCourseList())
-        //    {
-
-
-        //        Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
-        //    }
-        //}
 
 
         public static void CreateStudentFile() // done

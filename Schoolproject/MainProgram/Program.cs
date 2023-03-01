@@ -29,7 +29,7 @@ namespace Schoolproject.MainProgram
 
                     goto mainMenu;
                 case "2":
-                    PostgresDataAccess.ReadCourseList(course);
+                    PostgresDataAccess.PrintCourseList();
 
 
                     goto mainMenu;
