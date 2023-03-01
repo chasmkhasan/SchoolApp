@@ -1,4 +1,6 @@
-﻿namespace Schoolproject.MainProgram
+﻿using Schoolproject.Model;
+
+namespace Schoolproject.MainProgram
 {
     internal class Program
     {
@@ -27,7 +29,7 @@
 
                     goto mainMenu;
                 case "2":
-                    PostgresDataAccess.PrintCourseList();
+                    PostgresDataAccess.ReadCourseList(course);
 
 
                     goto mainMenu;

@@ -14,7 +14,7 @@ namespace Schoolproject.MainProgram
 {
     public class PostgresDataAccess
     {
-        public static List<Student> ReadStudentFromDataBase()
+        public static List<Student> ReadStudentFromDataBase() // done
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -26,7 +26,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void PrintStudent()
+        public static void PrintStudent() // done
         {
             
             foreach (var list in ReadStudentFromDataBase())
@@ -42,29 +42,57 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void PrintCourseList() // problem with datetime and int32
+        public static void ReadCourseList() // problem
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Course List.");
 
-                var listOfCourses = connectionWithServer.Query<Course>($"SELECT * FROM kha_course", new DynamicParameters());
-                
+                var listOfCourses = connectionWithServer.Query<Course>($" SELECT * FROM kha_course", new DynamicParameters());
 
                 foreach (var item in listOfCourses)
                 {
-                    //Console.WriteLine("Student's Id: " + item.id);
-                    //Console.WriteLine("Student's FirstName: " + item.name);
-                    //Console.WriteLine("Student's Points: " + item.points);
-                    //Console.WriteLine("Student's Start Date: " + item.start_date);
-                    //Console.WriteLine("Student's End Date: " + item.end_date);
-
                     Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
                 }
+                Console.ReadKey();
             }
         }
 
-        public static void CreateStudentFile()
+        //public static List<Course> ReadCourseList(Course course) // problem
+        //{
+        //    using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
+        //    {
+        //        Console.WriteLine("WelCome to Khan School's Course List.");
+
+        //        var listOfCourses = connectionWithServer.Query<Course>($" SELECT * FROM kha_course", new DynamicParameters());
+        //        return listOfCourses.ToList();
+
+        //        foreach (var item in course.id)
+        //        {
+        //            //Console.WriteLine("Student's Id: " + item.id);
+        //            //Console.WriteLine("Student's FirstName: " + item.name);
+        //            //Console.WriteLine("Student's Points: " + item.points);
+        //            //Console.WriteLine("Student's Start Date: " + item.start_date);
+        //            //Console.WriteLine("Student's End Date: " + item.end_date);
+
+        //            Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
+        //        }
+        //    }
+        //}
+
+        //public static void PrintCourseList() 
+        //{
+
+        //    foreach (var item in ReadCourseList())
+        //    {
+
+
+        //        Console.WriteLine("ID : {0}  |  Name: {1}|  Points: {2}|   Start Date: {3}|    End Date: {4}", item.id, item.name, item.points, item.start_date, item.end_date);
+        //    }
+        //}
+
+
+        public static void CreateStudentFile() // done
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -92,7 +120,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void CreateCourse() //Problem with query
+        public static void CreateCourse() // done
         {
             //using (IDbConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
@@ -107,11 +135,13 @@ namespace Schoolproject.MainProgram
                 Console.WriteLine("How much Point for the Course");
                 int points = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("When it is going to start");
-                DateTime startDate = DateTime.Parse(Console.ReadLine());
+                Console.WriteLine("When it is going to start(Please use this formate YYYY-Month-Date)");
+                //DateTime startDate = DateTime.Parse(Console.ReadLine());
+                DateTime startDate = Convert.ToDateTime(Console.ReadLine());
 
-                Console.WriteLine("When going to finish.");
-                DateTime endDate = DateTime.Parse(Console.ReadLine());
+                Console.WriteLine("When going to finish(Please use this formate YYYY-Month-Date).");
+                //DateTime endDate = DateTime.Parse(Console.ReadLine());
+                DateTime endDate = Convert.ToDateTime(Console.ReadLine());
 
                 string createCourseListQuery = "INSERT INTO kha_course(name, points, start_date, end_date)" +
                     "VALUES (@name, @points, @startDate, @endDate)";
@@ -121,7 +151,7 @@ namespace Schoolproject.MainProgram
             }
         }
 
-        public static void ChangePassword()
+        public static void ChangePassword() // done
         {
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
@@ -135,34 +165,30 @@ namespace Schoolproject.MainProgram
                     Console.WriteLine("First Name: {0}|  Last Name: {1}|   Email: {2}|", list.first_name, list.last_name, list.email);
                 }
 
-                //Console.WriteLine("Write your Email Address.");
-                //string eMail = Console.ReadLine().ToLower();
+                Console.WriteLine("Write your Email Address.");
+                string eMail = Console.ReadLine().ToLower();
 
-                Console.WriteLine("Write Your PassWord");
+                Console.WriteLine("Write Your old PassWord");
                 int passWord = int.Parse(Console.ReadLine());
 
                 int count = 0;
                 foreach (var student in listOfStudents)
                 {
-                    if (student.password == passWord)
+                    if (student.password == passWord && student.email == eMail)
                     {
-                        Console.WriteLine("PassWord is Right.");
+                        Console.WriteLine("You have permission to go foreward.");
                         count++;
                     }
-                    
                 }
                 
                 Console.WriteLine("Please put New Password");
                 int newPassWord = int.Parse(Console.ReadLine());
 
-
-                string changePasswordQuery = "UPDATE kha_student SET password = newPassWord WHERE newPassWord = password";
+                string changePasswordQuery = "UPDATE kha_student SET password = @newPassWord where email = @eMail";
                    
-                connectionWithServer.Execute(changePasswordQuery, new { newPassWord });
-
+                connectionWithServer.Execute(changePasswordQuery, new { newPassWord, eMail });
 
                 Console.ReadKey();
-
             }
         }
 
@@ -171,17 +197,38 @@ namespace Schoolproject.MainProgram
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Student List.");
-                Console.WriteLine("Which course would you like to change? Please put the serial Number");
 
-                var listOfCourses = connectionWithServer.Query<Course>($"SELECT * FROM kha_course", new DynamicParameters());
+                var editListOfCourses = connectionWithServer.Query<Course>($" SELECT * FROM kha_course", new DynamicParameters());
 
-                foreach (var item in listOfCourses)
+                foreach (var item in editListOfCourses)
                 {
                     Console.WriteLine("ID : {0}  |  Name: {1}| ", item.id, item.name);
                 }
 
+                Console.WriteLine("Write the ID number");
+                int inputId = int.Parse(Console.ReadLine());
 
+                Console.WriteLine("Which course would you like to chnage?");
+                string courseName = Console.ReadLine();
 
+                //int count = 0;
+                foreach (var list in editListOfCourses)
+                {
+                    if (list.name == courseName && list.id == inputId)
+                    {
+                        Console.WriteLine("Perfect!");
+                        //count++;
+                    }
+                }
+
+                Console.WriteLine("Write the new name of the course.");
+                string newCourseName = Console.ReadLine();
+
+                string changePasswordQuery = "UPDATE kha_course SET name = @newCourseName where id = @inputId";
+
+                connectionWithServer.Execute(changePasswordQuery, new { newCourseName });
+
+                Console.ReadKey();
             }
         }
 
@@ -190,12 +237,39 @@ namespace Schoolproject.MainProgram
             using (NpgsqlConnection connectionWithServer = new NpgsqlConnection(LoadConnectionString()))
             {
                 Console.WriteLine("WelCome to Khan School's Student List.");
-                Console.WriteLine("Which course do you like to detele? Please put your serial Number.");
-                int id = int.Parse(Console.ReadLine());
+                
+                var listOfCourses = connectionWithServer.Query<Course>($"SELECT * FROM kha_course", new DynamicParameters());
 
+                foreach (var item in listOfCourses)
+                {
+                    Console.WriteLine("ID : {0}  |  Name: {1}| ", item.id, item.name);
+                }
 
+                Console.WriteLine("Write the ID number");
+                int inputId = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Which course would you like to Delete?");
+                string deletedCourseName = Console.ReadLine();
+
+                //int count = 0;
+                foreach (var list in listOfCourses)
+                {
+                    if (list.name == deletedCourseName && list.id == inputId)
+                    {
+                        Console.WriteLine("Perfect!");
+                        //count++;
+                    }
+                }
+
+                Console.WriteLine("Write the new name of the course.");
+                string newCourseName = Console.ReadLine();
+
+                string changePasswordQuery = "DELETE FROM kha_course WHERE name = newCourseName";
+
+                connectionWithServer.Execute(changePasswordQuery, new { newCourseName });
             }
         }
+
         private static string LoadConnectionString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
