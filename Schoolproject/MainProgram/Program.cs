@@ -14,7 +14,7 @@ namespace Schoolproject.MainProgram
             Console.WriteLine("4. Create Course");
             Console.WriteLine("5. Change Password");
             Console.WriteLine("6. Edit Course");
-            Console.WriteLine("7. DeleteCourse");
+            Console.WriteLine("7. Delete Course");
             Console.WriteLine("A. Logout");
 
 

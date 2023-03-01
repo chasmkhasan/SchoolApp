@@ -204,7 +204,7 @@ namespace Schoolproject.MainProgram
                 int inputId = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("Which course would you like to chnage?");
-                string courseName = Console.ReadLine();
+                string courseName = Console.ReadLine().ToUpper();
 
                 //int count = 0;
                 foreach (var list in editListOfCourses)
@@ -217,11 +217,11 @@ namespace Schoolproject.MainProgram
                 }
 
                 Console.WriteLine("Write the new name of the course.");
-                string newCourseName = Console.ReadLine();
+                string newCourseName = Console.ReadLine().ToUpper();
 
                 string changePasswordQuery = "UPDATE kha_course SET name = @newCourseName where id = @inputId";
 
-                connectionWithServer.Execute(changePasswordQuery, new { newCourseName });
+                connectionWithServer.Execute(changePasswordQuery, new { newCourseName, inputId });
 
                 Console.ReadKey();
             }
@@ -244,7 +244,7 @@ namespace Schoolproject.MainProgram
                 int inputId = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("Which course would you like to Delete?");
-                string deletedCourseName = Console.ReadLine();
+                string deletedCourseName = Console.ReadLine().ToUpper();
 
                 //int count = 0;
                 foreach (var list in listOfCourses)
@@ -256,12 +256,11 @@ namespace Schoolproject.MainProgram
                     }
                 }
 
-                Console.WriteLine("Write the new name of the course.");
-                string newCourseName = Console.ReadLine();
+                string changePasswordQuery = "DELETE FROM kha_course WHERE name = @deletedCourseName";
 
-                string changePasswordQuery = "DELETE FROM kha_course WHERE name = newCourseName";
+                connectionWithServer.Execute(changePasswordQuery, new { deletedCourseName });
 
-                connectionWithServer.Execute(changePasswordQuery, new { newCourseName });
+                Console.ReadKey();
             }
         }
 
